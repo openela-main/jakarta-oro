@@ -32,7 +32,7 @@
 
 Name:           jakarta-oro
 Version:        2.0.8
-Release:        34%{?dist}
+Release:        36%{?dist}
 Summary:        Full regular expressions API
 License:        ASL 1.1
 Source0:        http://archive.apache.org/dist/jakarta/oro/%{name}-%{version}.tar.gz
@@ -68,7 +68,7 @@ find . -name "*.jar" -exec rm -f {} \;
 for dir in `find . -type d -name CVS`; do rm -rf $dir; done
 for file in `find . -type f -name .cvsignore`; do rm -rf $file; done
 
-%patch1
+%patch -P 1
 cp %{SOURCE1} .
 
 %build
@@ -88,6 +88,12 @@ ant -Dfinal.name=%{base_name} jar javadocs
 %license LICENSE
 
 %changelog
+* Thu Nov 21 2024 Marián Konček <mkoncek@redhat.com> - 2.0.8-36
+- Fix patch usage
+
+* Wed Nov 20 2024 Marián Konček <mkoncek@redhat.com> - 2.0.8-35
+- Rebuild with regenerated Requires on Java
+
 * Mon Aug 09 2021 Mohan Boddu <mboddu@redhat.com> - 2.0.8-34
 - Rebuilt for IMA sigs, glibc 2.34, aarch64 flags
   Related: rhbz#1991688
