@@ -32,7 +32,7 @@
 
 Name:           jakarta-oro
 Version:        2.0.8
-Release:        36%{?dist}
+Release:        39%{?dist}
 Summary:        Full regular expressions API
 License:        ASL 1.1
 Source0:        http://archive.apache.org/dist/jakarta/oro/%{name}-%{version}.tar.gz
@@ -40,11 +40,11 @@ Source1:        MANIFEST.MF
 Source2:        http://repo1.maven.org/maven2/%{base_name}/%{base_name}/%{version}/%{base_name}-%{version}.pom
 Patch1:         %{name}-build-xml.patch
 URL:            http://jakarta.apache.org/oro
+BuildArch:      noarch
+ExclusiveArch:  aarch64 ppc64le s390x x86_64 noarch
 
 BuildRequires:  javapackages-local
 BuildRequires:  ant
-
-BuildArch:      noarch
 
 %description
 The Jakarta-ORO Java classes are a set of text-processing Java classes
@@ -72,7 +72,7 @@ for file in `find . -type f -name .cvsignore`; do rm -rf $file; done
 cp %{SOURCE1} .
 
 %build
-ant -Dfinal.name=%{base_name} jar javadocs
+ant -Dfinal.name=%{base_name} jar javadocs -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8
 
 %install
 %mvn_file : %{name} %{base_name}
@@ -88,6 +88,15 @@ ant -Dfinal.name=%{base_name} jar javadocs
 %license LICENSE
 
 %changelog
+* Wed Dec 04 2024 Mikolaj Izdebski <mizdebsk@redhat.com> - 2.0.8-39
+- Set javac source and target to 1.8
+
+* Sat Nov 23 2024 Marián Konček <mkoncek@redhat.com> - 2.0.8-38
+- Add noarch to ExclusiveArch
+
+* Fri Nov 22 2024 Marián Konček <mkoncek@redhat.com> - 2.0.8-37
+- Disable building on i686
+
 * Thu Nov 21 2024 Marián Konček <mkoncek@redhat.com> - 2.0.8-36
 - Fix patch usage
 
